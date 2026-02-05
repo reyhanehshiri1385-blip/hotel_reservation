@@ -12,7 +12,8 @@ def sign_up():
                     if info[2]==username:
                         raise ValueError
             with open("users_info.txt","a") as file:
-                file.write(f"{first_name},{last_name},{username},{password}\n")
+                default_balance = 500
+                file.write(f"{first_name},{last_name},{username},{password},{default_balance}\n")
                 print("Your registration was successful!")
                 print(f"Welcome {first_name} {last_name}")
                 break
