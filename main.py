@@ -40,8 +40,22 @@ while True:
                     print("_"*40)
                     username= input("please enter your username:")
                     print("_"*40)
-                    rooms.reservation1(username,room_id,check_in,check_out,capacity)
-                    
+                    calculation = rooms.calculate_reserve(room_id,check_in,check_out,capacity)
+                    while True:
+                        print("enter 1 if you want to pay the cost")
+                        print("enter 2 if you want to cancel")
+                        choice = input("enter:")
+                        if choice=="1":
+                            if rooms.payment(username,calculation):
+                                rooms.final_reserve(username,room_id,check_in,check_out,capacity,calculation)
+                                break
+                            else:
+                                print("payment wasn't successful!")
+                                break                            
+                        elif choice=="2":
+                            break
+                        else:
+                            print("wrong number")
                 else:
                     print("wrong number")
         break

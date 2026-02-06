@@ -1,4 +1,50 @@
-[{"room_id":1,"type":"single","base_price":50,"facilities":["tv","fridge"],"capacity":2,"available":"True","status":"completed"},
-{"room_id":2,"type":"double","base_price":100,"facilities":["tv","fridge","wifi"],"capacity":4,"available":"True","status":"active"},
-{"room_id":3,"type":"suite","base_price":30,"facilities":["tv","fridge"],"capacity":1,"available":"True","status":"completed"},
-{"room_id":4,"type":"single","base_price":60,"facilities":["tv"],"capacity":2,"available":"True","status":"completed"}]
+[
+    {
+        "room_id": 1,
+        "type": "single",
+        "base_price": 50,
+        "facilities": [
+            "tv",
+            "fridge"
+        ],
+        "capacity": 2,
+        "available": "True",
+        "status": "active"
+    },
+    {
+        "room_id": 2,
+        "type": "double",
+        "base_price": 100,
+        "facilities": [
+            "tv",
+            "fridge",
+            "wifi"
+        ],
+        "capacity": 4,
+        "available": "True",
+        "status": "active"
+    },
+    {
+        "room_id": 3,
+        "type": "suite",
+        "base_price": 30,
+        "facilities": [
+            "tv",
+            "fridge"
+        ],
+        "capacity": 1,
+        "available": "True",
+        "status": "completed"
+    },
+    {
+        "room_id": 4,
+        "type": "single",
+        "base_price": 60,
+        "facilities": [
+            "tv"
+        ],
+        "capacity": 2,
+        "available": "True",
+        "status": "completed"
+    }
+]
