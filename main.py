@@ -9,11 +9,19 @@ while True:
         sign_up()
         break
     elif choice=="2":
-        if log_in() :
+        print("user login...")
+        user_username = input("please enter your username:")
+        password = input("please enter your password:")
+        if log_in(user_username,password) :
             while True:
-                print("enter 1 if: you want to see list of rooms")
-                print("enter 2 if: you want to search the room according to your request")
-                print("enter 3 if: you want to book a room")
+                print("enter 1 : see list of rooms")
+                print("enter 2 : search the room according to your request")
+                print("enter 3 : book a room")
+                print("enter 4 : see the list of your reservations")
+                print("enter 5 : see the list of your Active reservations")
+                print("enter 6 : cancel your reservation")
+                print("enter 7 : increasing your balance")
+                print("_"*40)
                 choice = input("your choice:")
                 if choice=="1":
                     print("you can see list of rooms!")
@@ -56,8 +64,16 @@ while True:
                             break
                         else:
                             print("wrong number")
+                elif choice=="4":
+                    rooms.list_reservations(user_username)
+                elif choice=="5":
+                    rooms.filter_list_reservations(user_username)
+                elif choice=="6":
+                    pass
+                elif choice=="7":
+                    rooms.increasing_balance(user_username)
                 else:
-                    print("wrong number")
+                    print("wrong input!")
         break
     elif choice=="3":
         break

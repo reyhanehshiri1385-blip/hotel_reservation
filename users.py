@@ -19,10 +19,7 @@ def sign_up():
                 break
         except ValueError:
             print("This username priviously registered!")
-def log_in():
-    print("user login...")
-    username = input("please enter your username:")
-    password = input("please enter your password:")
+def log_in(username,password):
     with open("users_info.txt","r") as file:
             for line in file:
                 info = line.strip().split(",")

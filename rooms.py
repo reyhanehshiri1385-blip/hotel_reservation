@@ -227,6 +227,52 @@ def final_reserve(username,room_num,check_in,check_out,people_num,calculation):
         json.dump(data,file,indent=4)
     print("your reservation was SUCCESSFUl!")
     print("you can see the information for your reservation...")
-    print(f" Username:{username}\n\n Room_id:{room_num}\n\n check_in date:{check_in}\n\n check_out date:{check_out}\n\n Capacity:{people_num}\n\n Total_price:{calculation}\n\n status:active")
-        
-
+    print(f"\n Username:{username}\n\n Room_id:{room_num}\n\n check_in date:{check_in}\n\n check_out date:{check_out}\n\n Capacity:{people_num}\n\n Total_price:{calculation}\n\n status:active\n")
+    print("_"*40)
+def list_reservations(username):
+    with open("reserve_info.json","r") as file:
+        data = json.load(file)
+        user_found = "No"
+        for info in data:
+            if info["username"]==username:
+                user_found = "Yes"
+                print("_"*40)
+                print(f"\n Room_id:{info["room_id"]}\n\n check_in date:{info["check_in"]}\n\n check_out date:{info["check_out"]}\n\n Capacity:{info["capacity"]}\n\n Total_price:{info["total_price"]}\n\n Status:{info["status"]}\n")
+                print("_"*40)
+        if user_found == "No":
+            print("_"*40)
+            print("No reservation yet!")
+            print("_"*40)
+def filter_list_reservations(username):
+    with open("reserve_info.json","r") as file:
+        data = json.load(file)
+        user_found = "No"
+        for info in data:
+            if info["username"]==username and info["status"]=="active":
+                user_found = "Yes"
+                print("_"*40)
+                print(f"\n Room_id:{info["room_id"]}\n\n check_in date:{info["check_in"]}\n\n check_out date:{info["check_out"]}\n\n Capacity:{info["capacity"]}\n\n Total_price:{info["total_price"]}\n\n Status:{info["status"]}\n")
+                print("_"*40)
+        if user_found == "No":
+            print("_"*40)
+            print("No active reservation yet!")
+            print("_"*40)
+def increasing_balance(username):
+    amount = input("How many dollars do you want to increase?")
+    print("while proccessing your account...")   
+    with open("users_info.txt","r") as file:
+        lines = file.readlines()
+        for i,line in enumerate(lines):
+            info = line.strip().split(",") 
+            if info[2]==username:
+                old_balance= int(info[4])
+                new_balance =int(info[4])+int(amount)
+                info[4]= str(new_balance)
+                lines[i]= ",".join(info)+"\n"
+                print("increasing your balance was successful!")
+                print("_"*40)
+                print(f"you had {old_balance}\nnow your new balance is {int(info[4])}")
+                print("_"*40)
+                break
+        with open("users_info.txt","w") as file:
+            file.writelines(lines)
