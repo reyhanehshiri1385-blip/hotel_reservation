@@ -1,6 +1,4 @@
 from abc import ABC,abstractmethod
-from random import choice
-from textwrap import indent
 class Room(ABC):
     def __init__(self,room_id,base_price,facilities,capacity,available,status):
         self.room_id = room_id
@@ -50,16 +48,19 @@ with open("rooms_info.json","r") as file:
 def show_rooms():
     for room in list_rooms:
         if type(room)==Single_Room:
+            print("_"*40)
             print(f"a single room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
             print("_"*40)
         if type(room)==Double_Room:
+            print("_"*40)
             print(f"a double room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
             print("_"*40)
         if type(room)==Suite_Room:
+            print("_"*40)
             print(f"a suite room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}") 
             print(f"status:{room.status}")
@@ -191,12 +192,12 @@ def payment(username,calculation):
         for i,line in enumerate(lines):
             info = line.strip().split(",") 
             if info[2]==username:
-                if calculation<= int(info[4]):
-                    subtraction = int(info[4])-calculation
+                if calculation<= float(info[4]):
+                    subtraction = float(info[4])-calculation
                     info[4]=f"{subtraction}"
                     lines[i]= ",".join(info)+"\n"
                     print("your payment was successful!")
-                    print(f"now your new balance is {int(info[4])}")
+                    print(f"now your new balance is {info[4]}")
                     print("_"*40)
                     can_reserve = True 
                     break
@@ -276,3 +277,77 @@ def increasing_balance(username):
                 break
         with open("users_info.txt","w") as file:
             file.writelines(lines)
+def cancel_reservation(username,room_id,check_in,check_out):
+    check_in_ob = datetime.strptime(check_in,"%Y_%m_%d")
+    with open("reserve_info.json","r") as file:
+        data = json.load(file)
+        reserve_found="No"
+        for info in data:
+            if info["username"]==username and info["room_id"]==room_id and info["check_in"]==check_in and info["check_out"]==check_out:
+                reserve_found="Yes"
+                info["status"]="canceled"
+                total_price=info["total_price"]
+                with open("reserve_info.json","w") as file:
+                    json.dump(data,file,indent=4)
+                # check the status of that room if it has not any active reserve changing the status to canceled in rooms_info.json!
+                with open("reserve_info.json","r") as file:
+                    data = json.load(file)
+                    any_active_reserve= "No"
+                    for info in data:
+                        if info["room_id"]==room_id:
+                            if info["status"]=="active":
+                                any_active_reserve="Yes"
+                    # not any active reserve
+                    if any_active_reserve=="No":
+                        with open("rooms_info.json","r") as file:
+                            data = json.load(file)
+                            for info in data:
+                                if info["room_id"]== room_id:
+                                    info["status"] = "canceled"
+                            with open("rooms_info.json","w") as file:
+                                json.dump(data,file,indent=4)
+                    # this room has active reserve
+                    if any_active_reserve=="Yes":
+                        with open("rooms_info.json","r") as file:
+                            data = json.load(file)
+                            for info in data:
+                                if info["room_id"]== room_id:
+                                    info["status"] = "active"
+                            with open("rooms_info.json","w") as file:
+                                json.dump(data,file,indent=4)
+                print("your reservation was canceled")
+                date_now = datetime.now()
+                # 48 hours means 2 days 
+                hour_diff = ((check_in_ob-date_now).total_seconds())/3600
+                # opening file related to users acount
+                print("in returning the cost of reservation...")
+                with open("users_info.txt","r") as file:
+                    lines = file.readlines()
+                    for i,line in enumerate(lines):
+                        info = line.strip().split(",") 
+                        if info[2]==username:
+                            if hour_diff > 48 :
+                                old_balance = info[4]
+                                new_balance = int(info[4])+total_price
+                                info[4]= str(new_balance)
+                                lines[i]= ",".join(info)+"\n"
+                                print("_"*40)
+                                print("returning was successful!\ntotal cost was returned!")
+                                print(f"you had {int(old_balance)} dollars \n now your new balance is {info[4]}")
+                                print("_"*40)
+                                break
+                            else:
+                                old_balance = info[4]
+                                new_balance = int(info[4])+((total_price)*0.5)
+                                info[4]= str(new_balance)
+                                lines[i]= ",".join(info)+"\n"
+                                print("_"*40)
+                                print("returning was successful!\n 50 percent of cost was returned!")
+                                print(f"you had {int(old_balance)} dollars \n now your new balance is {info[4]}")
+                                print("_"*40)
+                                break
+                    with open("users_info.txt","w") as file:
+                        file.writelines(lines)
+        if reserve_found=="No":
+            print("sorry! reserve wasn't found!")
+            print("_"*40)

@@ -1,4 +1,42 @@
 from users import sign_up,log_in
+from datetime import datetime
+import json
+# calling this function before any proccessing, every time this programm runs we should check for reservations's status!
+# maybe if the check out date is past we should change the status of reservation to completed.
+def update_completed_reservations():
+     with open("reserve_info.json","r") as file:
+        data = json.load(file)
+        for info in data:
+            date_now = datetime.now()
+            check_out_date = datetime.strptime(info["check_out"],"%Y_%m_%d")
+            if date_now > check_out_date:
+                info["status"]= "completed"
+                num_room_completed = info["room_id"]
+                # also we should check if that room has any active reserve or not!
+                # if it has, the status of that room when users see should be active!
+                any_active_reserve= "No"
+                for info in data:
+                    if info["status"]=="active" and info["room_id"]==num_room_completed:
+                        any_active_reserve= "Yes"
+                        with open("rooms_info.json","r") as file:
+                            data1 = json.load(file)
+                            for info_room in data1:
+                                if info_room["room_id"]== num_room_completed:
+                                    info_room["status"] = "active"
+                            with open("rooms_info.json","w") as file:
+                                json.dump(data1,file,indent=4)
+                # if that room has not any active reservation
+                if any_active_reserve=="No":
+                    with open("rooms_info.json","r") as file:
+                            data1 = json.load(file)
+                            for info_room in data1:
+                                if info_room["room_id"]== num_room_completed:
+                                    info_room["status"] = "completed"
+                            with open("rooms_info.json","w") as file:
+                                json.dump(data1,file,indent=4)
+        with open("reserve_info.json","w") as file:
+                    json.dump(data,file,indent=4)
+update_completed_reservations()
 import rooms
 while True:
     print("enter 1 if: registration")
@@ -69,7 +107,21 @@ while True:
                 elif choice=="5":
                     rooms.filter_list_reservations(user_username)
                 elif choice=="6":
-                    pass
+                        while True:
+                            try:
+                                print("_"*40)
+                                room_id_user= int(input("enter your room id that you want to cancel:"))
+                                print("_"*40)
+                                check_in_date = input("enter your check in date (YYYY_mm_dd):")
+                                check_in_date1 = datetime.strptime(check_in_date,"%Y_%m_%d") 
+                                print("_"*40)
+                                check_out_date = input("enter your check out data (YYYY_mm_dd):")
+                                check_out_date1 = datetime.strptime(check_out_date,"%Y_%m_%d")
+                                print("_"*40)
+                                break
+                            except ValueError:
+                                print("invalid input!enter again!")
+                        rooms.cancel_reservation(user_username,room_id_user,check_in_date,check_out_date)
                 elif choice=="7":
                     rooms.increasing_balance(user_username)
                 else:

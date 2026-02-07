@@ -22,7 +22,7 @@
         ],
         "capacity": 4,
         "available": "True",
-        "status": "active"
+        "status": "completed"
     },
     {
         "room_id": 3,

@@ -2,11 +2,11 @@
     {
         "username": "rey",
         "room_id": 2,
-        "check_in": "2026_01_13",
+        "check_in": "2026_01_10",
         "check_out": "2026_01_15",
         "capacity": 2,
         "total_price": 120,
-        "status": "active"
+        "status": "completed"
     },
     {
         "username": "rey",

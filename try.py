@@ -1,4 +1,5 @@
-ch = input("yyyy_mm_dd")
+
 from datetime import datetime
-ch = datetime.strptime(ch,"%Y_%m_%d")
-print(ch)
+date = datetime.now()
+date1 = datetime(2026,2,9,6,42,59)
+print((date1-date).days)
