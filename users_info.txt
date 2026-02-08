@@ -1,2 +1,2 @@
-reyhaneh,shiri,rey,123,870.0
-zahra,ahmadi,zari,1385,500
+reyhaneh,shiri,rey,123,340.0
+zahra,ahmadi,zari,1385,100.0

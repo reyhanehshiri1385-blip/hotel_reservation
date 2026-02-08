@@ -2,19 +2,21 @@
     {
         "username": "rey",
         "room_id": 2,
-        "check_in": "2026_02_10",
-        "check_out": "2026_02_15",
-        "capacity": 2,
-        "total_price": 120,
-        "status": "active"
+        "check_in": "2026_01_10",
+        "check_out": "2026_01_15",
+        "capacity": 4,
+        "total_price": 530,
+        "status": "completed",
+        "ask_comment": "Yes"
     },
     {
-        "username": "rey",
+        "username": "zari",
         "room_id": 1,
-        "check_in": "2026_02_13",
-        "check_out": "2026_02_15",
+        "check_in": "2026_01_10",
+        "check_out": "2026_01_18",
         "capacity": 2,
-        "total_price": 120,
-        "status": "active"
+        "total_price": 400,
+        "status": "completed",
+        "ask_comment": "Yes"
     }
 ]

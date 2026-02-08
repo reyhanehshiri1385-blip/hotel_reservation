@@ -256,7 +256,7 @@ def final_reserve(username,room_num,check_in,check_out,people_num,calculation):
     with open("reserve_info.json","r") as file:
         data = json.load(file)
         info_new_reserve={"username":username,"room_id":room_num,"check_in":check_in,"check_out":check_out,
-                          "capacity":people_num,"total_price":calculation,"status":"active" }
+                          "capacity":people_num,"total_price":calculation,"status":"active","ask_comment":"No" }
         data.append(info_new_reserve)
     with open("reserve_info.json","w") as file:
         json.dump(data,file,indent=4)

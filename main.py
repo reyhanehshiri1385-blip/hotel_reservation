@@ -5,13 +5,19 @@ import json
 # maybe if the check out date is past we should change the status of reservation to completed.
 def update_completed_reservations():
     with open("reserve_info.json","r") as file:
+        # create a dictionary can collect user, and collect room that has completed status today 
+        # it is the time to ask for user's opinin a bout the room he/she has reserved. 
+        username_room=dict()
         data = json.load(file)
         for info in data:
             date_now = datetime.now()
             check_out_date = datetime.strptime(info["check_out"],"%Y_%m_%d")
-            if date_now > check_out_date:
+            if (date_now > check_out_date) and info["status"]=="active" and info["ask_comment"]=="No" :
                 info["status"]= "completed"
+# the user can give opinion and point!
+                user_name = info["username"]
                 num_room_completed = info["room_id"]
+                username_room[user_name]=num_room_completed
                 # also we should check if that room has any active reserve or not!
                 # if it has, the status of that room when users see should be active!
                 any_active_reserve= "No"
@@ -34,9 +40,14 @@ def update_completed_reservations():
                                     info_room["status"] = "completed"
                             with open("rooms_info.json","w") as file:
                                 json.dump(data1,file,indent=4)
+            elif info["ask_comment"]=="No" :
+                user_name = info["username"]
+                num_room_no_comment = info["room_id"]
+                username_room[user_name]=num_room_no_comment
         with open("reserve_info.json","w") as file:
-                    json.dump(data,file,indent=4)
-update_completed_reservations()
+                    json.dump(data,file,indent=4)  
+        return username_room   
+username_room = update_completed_reservations()
 import rooms
 while True:
     print("enter 1 if: registration")
@@ -68,6 +79,58 @@ while True:
                                 print(f" 24 hours left to your check in date! \n your room id: {room_num}")
                                 print("_"*40)
             auto_reminder(user_username)
+            # now the user has successful log in so we should check if user has completed room today ask for her/his opinion!
+            for username,room in username_room.items():
+                if username == user_username:
+                    print(" your reservation was completed!\n Do you have an opinion a bout the room you had reserved?\n " \
+                    f"the room id was {room}\n")
+                    while True:
+                        print("enter 1 if: Yes")
+                        print("enter 2 if: NO")
+                        choice = input("your choice:")
+                        if choice=="1":
+                            print("_"*40)
+                            opinion= input("enter your opinion and comment a bout the room:")
+                            while True:
+                                point = input("enter one number between 1(*) to 5(*****) to the room performance:")
+                                try:
+                                    point = int(point)
+                                    if int(point)>5 or int(point)<1:
+                                        raise ValueError("invalid input! enter again!")
+                                    valid_input = "Yes"
+                                    break
+                                except ValueError:
+                                    print("invalid input! enter again!")
+                            if valid_input=="Yes":
+                                with open("reserve_info.json","r") as file:
+                                    data = json.load(file)
+                                    for info in data:
+                                        if info["username"]==user_username and info["room_id"]==room and info["ask_comment"]=="No":
+                                            info["ask_comment"]="Yes"
+                                with open("reserve_info.json","w") as file:
+                                    json.dump(data,file,indent=4)  
+                                print("_"*40)
+                                print("your opinion was registered! thank you")
+                                print("_"*40)
+                                # comment and opinion registration!
+                                with open("comment_point_users.json","r") as file:
+                                    data = json.load(file)
+                                    new_comment = {"username":user_username,"room_id":room,"comment":opinion,"rate":point}
+                                    data.append(new_comment)
+                                with open("comment_point_users.json","w") as file:
+                                    json.dump(data,file,indent=4)
+                            break                           
+                        elif choice=="2":
+                            with open("reserve_info.json","r") as file:
+                                    data = json.load(file)
+                                    for info in data:
+                                        if info["username"]==user_username and info["room_id"]==room and info["ask_comment"]=="No":
+                                            info["ask_comment"]="Yes"
+                            with open("reserve_info.json","w") as file:
+                                json.dump(data,file,indent=4)  
+                            break
+                        else:
+                            print("wrong input! enter again!")
             while True:
                 print("enter 1 : see list of rooms")
                 print("enter 2 : search the room according to your request")
