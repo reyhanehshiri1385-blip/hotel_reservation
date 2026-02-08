@@ -4,7 +4,7 @@ import json
 # calling this function before any proccessing, every time this programm runs we should check for reservations's status!
 # maybe if the check out date is past we should change the status of reservation to completed.
 def update_completed_reservations():
-     with open("reserve_info.json","r") as file:
+    with open("reserve_info.json","r") as file:
         data = json.load(file)
         for info in data:
             date_now = datetime.now()
@@ -51,6 +51,23 @@ while True:
         user_username = input("please enter your username:")
         password = input("please enter your password:")
         if log_in(user_username,password) :
+            # when user logs in to the program if only 24 hours left the user's check in date,
+            # user should notice the alarm!
+            def auto_reminder(username):
+                with open("reserve_info.json","r") as file:
+                    data = json.load(file)
+                    for info in data:
+                        if info["username"]== username and info["status"]== "active":
+                            room_num = info["room_id"]
+                            date_now = datetime.now()
+                            check_in_date = datetime.strptime(info["check_in"],"%Y_%m_%d")
+                            day_diff = (check_in_date - date_now).days
+                            if day_diff == 1 :
+                                print("_"*40)
+                                print("REMINDER!")
+                                print(f" 24 hours left to your check in date! \n your room id: {room_num}")
+                                print("_"*40)
+            auto_reminder(user_username)
             while True:
                 print("enter 1 : see list of rooms")
                 print("enter 2 : search the room according to your request")
@@ -84,16 +101,14 @@ while True:
                     print("_"*40)
                     capacity= int(input("please enter the number of guests that you have:"))
                     print("_"*40)
-                    username= input("please enter your username:")
-                    print("_"*40)
                     calculation = rooms.calculate_reserve(room_id,check_in,check_out,capacity)
-                    while True:
+                    while calculation:
                         print("enter 1 if you want to pay the cost")
                         print("enter 2 if you want to cancel")
                         choice = input("enter:")
                         if choice=="1":
-                            if rooms.payment(username,calculation):
-                                rooms.final_reserve(username,room_id,check_in,check_out,capacity,calculation)
+                            if rooms.payment(user_username,calculation):
+                                rooms.final_reserve(user_username,room_id,check_in,check_out,capacity,calculation)
                                 break
                             else:
                                 print("payment wasn't successful!")

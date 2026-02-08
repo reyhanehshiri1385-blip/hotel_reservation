@@ -147,6 +147,7 @@ def calculate_reserve(num_room,check_in,check_out,num_people):
                 print("_"*40)
                 return calculation
     print("we do not have this room!,enter correct number for room you wanted!")
+    return None
 def showroom_basedate(check_in,check_out):
     rooms=[]
     check_in=datetime.strptime(check_in,"%Y_%m_%d")
