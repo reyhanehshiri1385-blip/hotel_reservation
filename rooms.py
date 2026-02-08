@@ -12,22 +12,55 @@ class Room(ABC):
         pass
 class Single_Room(Room):
     def calculate_price(self, num_night):
-        calculation = (self.base_price)*(num_night)+20
-        print(f"""tatal cost: {calculation}
-                  20 dollars for services besides base price""")
-        return calculation
+        if num_night >= 7:
+            calculation = (self.base_price)*(num_night)
+            print("_"*40)
+            print(f"""tatal cost: {calculation} \n
+                  you got discount! \n
+                  you do not need to pay 20 dollars for services besides base price""")
+            print("_"*40)
+            return calculation
+        else:
+            calculation = (self.base_price)*(num_night)+20
+            print("_"*40)
+            print(f"""tatal cost: {calculation}
+                    20 dollars for services besides base price""")
+            print("_"*40)
+            return calculation
 class Double_Room(Room):
     def calculate_price(self, num_night):
-        calculation = (self.base_price)*(num_night)+30
-        print(f"""tatal cost: {calculation}
-                  30 dollars for services besides base price""")  
-        return calculation     
+        if num_night >= 7:
+            calculation = (self.base_price)*(num_night)
+            print("_"*40)
+            print(f"""tatal cost: {calculation} \n
+                  you got discount! \n
+                  you do not need to pay 30 dollars for services besides base price""")
+            print("_"*40)
+            return calculation
+        else:
+            calculation = (self.base_price)*(num_night)+30
+            print("_"*40)
+            print(f"""tatal cost: {calculation}
+                    30 dollars for services besides base price""")  
+            print("_"*40)
+            return calculation     
 class Suite_Room(Room):
     def calculate_price(self, num_night):
-        calculation = (self.base_price)*(num_night)+10
-        print(f"""tatal cost: {calculation}
-                  10 dollars for services besides base price""")
-        return calculation
+        if num_night >= 7:
+            calculation = (self.base_price)*(num_night)
+            print("_"*40)
+            print(f"""tatal cost: {calculation} \n
+                  you got discount! \n
+                  you do not need to pay 10 dollars for services besides base price""")
+            print("_"*40)
+            return calculation
+        else:
+            calculation = (self.base_price)*(num_night)+10
+            print("_"*40)
+            print(f"""tatal cost: {calculation}
+                    10 dollars for services besides base price""")
+            print("_"*40)
+            return calculation
 import json
 with open("rooms_info.json","r") as file:
     list_rooms = []
