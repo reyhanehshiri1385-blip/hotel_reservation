@@ -9,7 +9,8 @@
         ],
         "capacity": 2,
         "available": "True",
-        "status": "completed"
+        "status": "completed",
+        "average_rate": 4.0
     },
     {
         "room_id": 2,
@@ -22,7 +23,8 @@
         ],
         "capacity": 4,
         "available": "True",
-        "status": "completed"
+        "status": "completed",
+        "average_rate": 3.5
     },
     {
         "room_id": 3,
@@ -34,7 +36,8 @@
         ],
         "capacity": 1,
         "available": "True",
-        "status": "completed"
+        "status": "completed",
+        "average_rate": 0
     },
     {
         "room_id": 4,
@@ -45,6 +48,7 @@
         ],
         "capacity": 2,
         "available": "True",
-        "status": "completed"
+        "status": "completed",
+        "average_rate": 0
     }
 ]

@@ -48,7 +48,6 @@ def update_completed_reservations():
                     json.dump(data,file,indent=4)  
         return username_room   
 username_room = update_completed_reservations()
-import rooms
 while True:
     print("enter 1 if: registration")
     print("enter 2 if: login")
@@ -119,6 +118,23 @@ while True:
                                     data.append(new_comment)
                                 with open("comment_point_users.json","w") as file:
                                     json.dump(data,file,indent=4)
+                                # after the user registered her/his opinion, we should update rates's average of that room!
+                                def update_average_rates(room_id):
+                                    with open("comment_point_users.json","r") as file:
+                                        rates = []
+                                        data = json.load(file)
+                                        for info in data:
+                                            if info["room_id"]==room_id:
+                                                rates.append(info["rate"])
+                                    average_rate = sum(rates)/len(rates)
+                                    with open("rooms_info.json","r") as file:
+                                        data = json.load(file)
+                                        for info in data:
+                                            if info["room_id"]== room_id:
+                                                info["average_rate"] = average_rate
+                                    with open("rooms_info.json","w") as file:
+                                        json.dump(data,file,indent=4)
+                                update_average_rates(room)
                             break                           
                         elif choice=="2":
                             with open("reserve_info.json","r") as file:
@@ -131,6 +147,7 @@ while True:
                             break
                         else:
                             print("wrong input! enter again!")
+            import rooms
             while True:
                 print("enter 1 : see list of rooms")
                 print("enter 2 : search the room according to your request")

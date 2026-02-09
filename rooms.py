@@ -1,12 +1,13 @@
 from abc import ABC,abstractmethod
 class Room(ABC):
-    def __init__(self,room_id,base_price,facilities,capacity,available,status):
+    def __init__(self,room_id,base_price,facilities,capacity,available,status,average_rate):
         self.room_id = room_id
         self.base_price = base_price
         self.facilities = facilities
         self.capacity = capacity
         self.available = available
         self.status = status
+        self.average_rate = average_rate
     @abstractmethod
     def calculate_price(self,num_night):
         pass
@@ -67,15 +68,15 @@ with open("rooms_info.json","r") as file:
     file = json.load(file)
     for line in file:
         if line["type"]== "single":
-            single_room = Single_Room(line["room_id"],line["base_price"],line["facilities"],line["capacity"],line["available"],line["status"])
+            single_room = Single_Room(line["room_id"],line["base_price"],line["facilities"],line["capacity"],line["available"],line["status"],line["average_rate"])
             if line["available"]=="True":
                 list_rooms.append(single_room)         
         elif line["type"]== "double":
-            double_room = Double_Room(line["room_id"],line["base_price"],line["facilities"],line["capacity"],line["available"],line["status"])
+            double_room = Double_Room(line["room_id"],line["base_price"],line["facilities"],line["capacity"],line["available"],line["status"],line["average_rate"])
             if line["available"]=="True":
                 list_rooms.append(double_room)
         elif line["type"]== "suite":
-            suite_room = Suite_Room(line["room_id"],line["base_price"],line["facilities"],line["capacity"],line["available"],line["status"])
+            suite_room = Suite_Room(line["room_id"],line["base_price"],line["facilities"],line["capacity"],line["available"],line["status"],line["average_rate"])
             if line["available"]=="True":
                 list_rooms.append(suite_room)
 def show_rooms():
@@ -85,18 +86,21 @@ def show_rooms():
             print(f"a single room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Double_Room:
             print("_"*40)
             print(f"a double room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Suite_Room:
             print("_"*40)
             print(f"a suite room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}") 
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)   
 def search_rooms_price():
     low_price = input("enter type of price range,first low price limit: (for example 50 dollars)")
@@ -113,16 +117,19 @@ def search_rooms_price():
             print(f"a single room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Double_Room:
             print(f"a double room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Suite_Room:
             print(f"a suite room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
     return list_choice 
 def search_rooms_facilities():
@@ -146,16 +153,19 @@ def search_rooms_facilities():
             print(f"a single room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Double_Room:
             print(f"a double room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Suite_Room:
             print(f"a suite room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40) 
     return list_choice
 from datetime import datetime
@@ -208,16 +218,19 @@ def showroom_basedate(check_in,check_out):
             print(f"a single room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Double_Room:
             print(f"a double room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}")
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
         if type(room)==Suite_Room:
             print(f"a suite room with this information:")
             print(f"room id:{room.room_id} |,base price:{room.base_price} |,facilities:{room.facilities} |,capacity:{room.capacity}") 
             print(f"status:{room.status}")
+            print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*40)
 def payment(username,calculation):
     print("in pay...")
@@ -385,3 +398,18 @@ def cancel_reservation(username,room_id,check_in,check_out):
         if reserve_found=="No":
             print("sorry! reserve wasn't found!")
             print("_"*40)
+def update_average_rates(room_id):
+    with open("comment_point_users.json","r") as file:
+        rates = []
+        data = json.load(file)
+        for info in data:
+            if info["room_id"]==room_id:
+                rates.append(info["rate"])
+    average_rate = sum(rates)/len(rates)
+    with open("rooms_info.json","r") as file:
+        data = json.load(file)
+        for info in data:
+            if info["room_id"]== room_id:
+                info["average_rate"] = average_rate
+    with open("rooms_info.json","w") as file:
+        json.dump(data,file,indent=4)

@@ -4,5 +4,17 @@
         "room_id": 2,
         "comment": "beautiful",
         "rate": 4
+    },
+    {
+        "username": "rey",
+        "room_id": 2,
+        "comment": "not bad",
+        "rate": 3
+    },
+    {
+        "username": "zari",
+        "room_id": 1,
+        "comment": "good",
+        "rate": 4
     }
 ]
