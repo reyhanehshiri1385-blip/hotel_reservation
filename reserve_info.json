@@ -18,5 +18,25 @@
         "total_price": 400,
         "status": "completed",
         "ask_comment": "Yes"
+    },
+    {
+        "username": "rey",
+        "room_id": 4,
+        "check_in": "2026_04_16",
+        "check_out": "2026_04_20",
+        "capacity": 2,
+        "total_price": 260,
+        "status": "canceled",
+        "ask_comment": "No"
+    },
+    {
+        "username": "sara",
+        "room_id": 3,
+        "check_in": "2026_05_12",
+        "check_out": "2026_05_20",
+        "capacity": 1,
+        "total_price": 240,
+        "status": "canceled",
+        "ask_comment": "No"
     }
 ]

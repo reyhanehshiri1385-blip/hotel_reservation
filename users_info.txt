@@ -1,2 +1,4 @@
-reyhaneh,shiri,rey,123,340.0
+reyhaneh,shiri,rey,123,1260.0
 zahra,ahmadi,zari,1385,100.0
+sara,rahimi,sara,123,840.0
+fatemeh,ahmadi,fati,1234,500

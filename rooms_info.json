@@ -36,7 +36,7 @@
         ],
         "capacity": 1,
         "available": "True",
-        "status": "completed",
+        "status": "canceled",
         "average_rate": 0
     },
     {
@@ -48,7 +48,7 @@
         ],
         "capacity": 2,
         "available": "True",
-        "status": "completed",
+        "status": "canceled",
         "average_rate": 0
     }
 ]
