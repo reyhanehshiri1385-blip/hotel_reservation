@@ -222,6 +222,63 @@ def search_rooms_facilities():
             print(f"Average rating:{room.average_rate} (of 5)")
             print("_"*80) 
     return list_choice
+def search_rooms_type():
+    # user can choose type of rooms: suite, double or single!
+    while True:
+        # exception handling...
+        try:
+            print("_"*80)
+            print("enter 1: if single room\nenter 2: if double room\nenter 3: if suite room")
+            choice_type = input("please enter the type of room that you want?")
+            print("_"*80)
+            choice_type_int = int(choice_type)
+            if choice_type_int>3 or choice_type_int<1:
+                raise ValueError
+            break
+        except ValueError:
+            print("_"*80)
+            print("invalid input! enter again!")
+            print("_"*80)           
+    list_choice_type = []
+    # finding rooms that have the type selected by the user
+    for room in list_rooms:
+        if choice_type_int==1 and type(room)==Single_Room:
+            list_choice_type.append(room)
+        elif choice_type_int==2 and type(room)==Double_Room:
+            list_choice_type.append(room)
+        elif choice_type_int==3 and type(room)==Suite_Room:
+            list_choice_type.append(room)
+    print("_"*80)        
+    print("this result is based on your choice:")
+    print("_"*80)
+    if list_choice_type==[]:
+        print("_"*80)
+        print("sorry we couldn't find any result!")
+        print("_"*80)
+    # list_choice_type has rooms that they have the type selected by the user
+    for room in list_choice_type:
+        if type(room)==Single_Room:
+            print("_"*80)
+            print(f"a single room with this information:\n")
+            print(f"room id:{room.room_id} |,base price:{room.base_price}\n\n facilities:{room.facilities} |,capacity:{room.capacity}\n")
+            print(f"status:{room.status}\n")
+            print(f"Average rating:{room.average_rate} (of 5)")
+            print("_"*80)
+        elif type(room)==Double_Room:
+            print("_"*80)
+            print(f"a double room with this information:\n")
+            print(f"room id:{room.room_id} |,base price:{room.base_price}\n\n facilities:{room.facilities} |,capacity:{room.capacity}\n")
+            print(f"status:{room.status}\n")
+            print(f"Average rating:{room.average_rate} (of 5)")
+            print("_"*80)
+        elif type(room)==Suite_Room:
+            print("_"*80)
+            print(f"a suite room with this information:\n")
+            print(f"room id:{room.room_id} |,base price:{room.base_price}\n\n facilities:{room.facilities} |,capacity:{room.capacity}\n")
+            print(f"status:{room.status}\n")
+            print(f"Average rating:{room.average_rate} (of 5)")
+            print("_"*80)
+    return list_choice_type 
 from datetime import datetime
 def calculate_reserve(num_room,check_in,check_out,num_people):
     existing_in=datetime.strptime(check_in,"%Y_%m_%d")

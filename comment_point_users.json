@@ -16,5 +16,17 @@
         "room_id": 1,
         "comment": "good",
         "rate": 4
+    },
+    {
+        "username": "zari",
+        "room_id": 3,
+        "comment": "good",
+        "rate": 3
+    },
+    {
+        "username": "fati",
+        "room_id": 4,
+        "comment": "excellent",
+        "rate": 5
     }
 ]

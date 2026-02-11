@@ -36,8 +36,8 @@
         ],
         "capacity": 1,
         "available": "True",
-        "status": "canceled",
-        "average_rate": 0
+        "status": "completed",
+        "average_rate": 3.0
     },
     {
         "room_id": 4,
@@ -48,7 +48,7 @@
         ],
         "capacity": 2,
         "available": "True",
-        "status": "canceled",
-        "average_rate": 0
+        "status": "completed",
+        "average_rate": 5.0
     }
 ]

@@ -1,3 +1,4 @@
+from email.errors import InvalidDateDefect
 from users import sign_up,log_in
 from datetime import datetime
 import json
@@ -199,7 +200,7 @@ while True:
                     # user should enter one of options: price range or facilities
                     while True:
                         print("_"*80)
-                        search_base = input("you want to search base on (price range) or (facilities):")
+                        search_base = input("you want to search base on (price range) or (facilities) or (type):")
                         print("_"*80)
                         if search_base=="price range":
                             rooms.search_rooms_price()
@@ -207,9 +208,12 @@ while True:
                         elif search_base=="facilities":
                             rooms.search_rooms_facilities()
                             break
+                        elif search_base=="type":
+                            rooms.search_rooms_type()
+                            break
                         else:
                             print("_"*80)
-                            print("just write (price range) or (facilities)")
+                            print("just write (price range) or (facilities) or (type)")
                             print("_"*80)
                 elif choice=="3":
                     while True:
@@ -219,17 +223,24 @@ while True:
                             check_in = input("please enter your check in date (YYYY_mm_dd):")
                             # exception handling...
                             check_in_exc_handl= datetime.strptime(check_in,"%Y_%m_%d")
+                            date_now = datetime.now()
+                            # if date was past!
+                            if check_in_exc_handl<date_now:
+                                raise ValueError
                             print("_"*80)
                             check_out = input("please enter your check out date (YYYY_mm_dd):")
                             # exception handling...
                             check_out_exc_handl= datetime.strptime(check_out,"%Y_%m_%d")
+                            # if date was past!
+                            if check_out_exc_handl<date_now:
+                                raise ValueError
                             print("_"*80)
                             print("you can see list of available rooms during this dates:")
                             print("_"*80)
                             break
                         except ValueError:
                             print("_"*80)
-                            print("invalid input! enter again!")
+                            print("invalid input or invalid date! enter again!")
                             print("_"*80)
                     rooms.showroom_basedate(check_in,check_out)
                         # after user can choose the room that he/she wants
@@ -279,6 +290,7 @@ while True:
                 elif choice=="6":
                         # when users want to cancel reservations, they should enter the information of reserve
                         while True:
+                            # exception handling...
                             try:
                                 print("_"*80)
                                 room_id_user= int(input("enter your room id that you want to cancel:"))
@@ -289,6 +301,16 @@ while True:
                                 check_out_date = input("enter your check out data (YYYY_mm_dd):")
                                 check_out_date1 = datetime.strptime(check_out_date,"%Y_%m_%d")
                                 print("_"*80)
+                                # if user has cenceled her/his reserve, can not cancel it again!
+                                # if user has completed her/his reserve, can not cancel it again!
+                                with open("reserve_info.json","r") as file:
+                                    data = json.load(file)
+                                    for info in data:
+                                        if info["room_id"]==room_id_user and info["check_in"]==check_in_date and info["check_out"]==check_out_date and info["username"]==user_username:
+                                            if info["status"]=="canceled":
+                                                raise ValueError("this room has been canceled before!")
+                                            elif info["status"]=="completed":
+                                                raise ValueError("this room has been completed before!")
                                 break
                             except ValueError:
                                 print("_"*80)
